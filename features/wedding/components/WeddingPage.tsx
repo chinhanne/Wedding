@@ -113,7 +113,7 @@ export function WeddingPage() {
         </div>
       )}
 
-      <div className="mx-auto min-h-screen max-w-md overflow-hidden shadow-2xl md:max-w-3xl md:rounded-[2rem] md:bg-white/60 md:ring-1 md:ring-white/70 lg:min-h-0 lg:max-w-[1280px]">
+      <div className="wedding-shell mx-auto min-h-screen max-w-md overflow-hidden rounded-4xl md:max-w-3xl lg:max-w-[1280px]">
         <HeroSection
           guestName={guestName}
           isMusicPlaying={music.isPlaying}

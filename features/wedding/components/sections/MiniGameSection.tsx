@@ -36,13 +36,9 @@ export function MiniGameSection() {
   };
 
   return (
-    <section id="mini-game" className="w-full px-5 pb-8 md:px-5 lg:h-full lg:px-0 lg:pb-0"> 
-      <div className="flex h-full flex-col rounded-4xl border border-rose-100 bg-linear-to-br from-rose-50 to-emerald-50 p-5 shadow-sm md:p-7 lg:p-8">
-        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-white text-2xl text-rose-500 shadow-sm">
-          {finished ? <WeddingIcons.trophy /> : <WeddingIcons.game />}
-        </div>
-
-        <h2 className="mt-3 text-center font-serif text-3xl italic text-rose-500">
+    <section id="mini-game" className="w-full px-5 pb-8 md:px-5 lg:h-full lg:px-0 lg:pb-0">
+      <div className="section-card decorated-section-card flex h-full flex-col rounded-4xl bg-linear-to-br from-rose-50/90 to-emerald-50/90 p-5 md:p-7 lg:p-8">
+        <h2 className="section-title mt-3 text-center text-3xl md:text-4xl">
           Mini game
         </h2>
 

@@ -6,7 +6,18 @@ html {
 
 body {
   min-height: 100vh;
+  background:
+    radial-gradient(circle at 8% 8%, rgba(255, 205, 214, 0.75), transparent 18%),
+    radial-gradient(circle at 92% 6%, rgba(255, 225, 190, 0.8), transparent 20%),
+    radial-gradient(circle at 12% 78%, rgba(255, 235, 240, 0.75), transparent 20%),
+    radial-gradient(circle at 88% 82%, rgba(220, 252, 231, 0.45), transparent 18%),
+    linear-gradient(180deg, #fff9f7 0%, #fff5f7 45%, #fffdfb 100%);
+  color: #5f5353;
 }
+
+/* =========================
+   Petal effect
+========================= */
 
 .petal-shape {
   display: block;
@@ -38,6 +49,10 @@ body {
   animation-iteration-count: infinite;
 }
 
+/* =========================
+   Old wish fall effect
+========================= */
+
 @keyframes wish-fall {
   0% {
     transform: translateY(-80px) rotate(-4deg);
@@ -63,21 +78,344 @@ body {
   animation: wish-fall 9s ease-in-out infinite;
 }
 
-.wish-list {
-  scrollbar-width: thin;
-  scrollbar-color: #fb7185 #fff1f2;
+/* =========================
+   Wedding shell
+========================= */
+
+.wedding-shell {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 16% 10%, rgba(255, 241, 242, 0.9), transparent 20%),
+    radial-gradient(circle at 84% 14%, rgba(255, 247, 237, 0.95), transparent 22%),
+    linear-gradient(180deg, #fffdfc 0%, #fff8f9 52%, #fffdfb 100%);
+  box-shadow: 0 20px 60px rgba(201, 143, 153, 0.18);
 }
 
-.wish-list::-webkit-scrollbar {
-  width: 6px;
+.wedding-shell>* {
+  position: relative;
+  z-index: 1;
 }
 
-.wish-list::-webkit-scrollbar-track {
+.wedding-shell::before {
+  content: '';
+  position: absolute;
+  top: -18px;
+  left: -18px;
+  z-index: 0;
+  width: 260px;
+  height: 260px;
+  pointer-events: none;
+  opacity: 0.85;
+  filter: blur(0.2px);
+  background:
+    radial-gradient(circle at 12% 18%, #fecdd3 0 7px, transparent 8px),
+    radial-gradient(circle at 23% 10%, #fbcfe8 0 5px, transparent 6px),
+    radial-gradient(circle at 36% 17%, #fed7aa 0 8px, transparent 9px),
+    radial-gradient(circle at 51% 9%, #fde68a 0 4px, transparent 5px),
+    radial-gradient(circle at 68% 18%, #bbf7d0 0 6px, transparent 7px),
+    radial-gradient(circle at 82% 12%, #bae6fd 0 5px, transparent 6px),
+    radial-gradient(circle at 10% 43%, #ffe4e6 0 11px, transparent 12px),
+    radial-gradient(circle at 25% 36%, #fda4af 0 4px, transparent 5px),
+    radial-gradient(circle at 42% 42%, #fed7aa 0 7px, transparent 8px),
+    radial-gradient(circle at 60% 35%, #fef3c7 0 9px, transparent 10px),
+    radial-gradient(circle at 78% 42%, #dcfce7 0 7px, transparent 8px),
+    radial-gradient(circle at 92% 36%, #fce7f3 0 5px, transparent 6px),
+    radial-gradient(circle at 15% 68%, #fecdd3 0 6px, transparent 7px),
+    radial-gradient(circle at 32% 62%, #fde68a 0 5px, transparent 6px),
+    radial-gradient(circle at 47% 73%, #fbcfe8 0 10px, transparent 11px),
+    radial-gradient(circle at 66% 64%, #fed7aa 0 6px, transparent 7px),
+    radial-gradient(circle at 84% 70%, #bbf7d0 0 8px, transparent 9px),
+    radial-gradient(circle at 22% 88%, #fff1f2 0 12px, transparent 13px),
+    radial-gradient(circle at 42% 91%, #fecdd3 0 5px, transparent 6px),
+    radial-gradient(circle at 63% 86%, #ffedd5 0 9px, transparent 10px),
+    radial-gradient(circle at 82% 92%, #fce7f3 0 6px, transparent 7px);
+}
+
+.wedding-shell::after {
+  content: '';
+  position: absolute;
+  right: -22px;
+  bottom: -22px;
+  z-index: 0;
+  width: 300px;
+  height: 300px;
+  pointer-events: none;
+  opacity: 0.9;
+  filter: blur(0.2px);
+  background:
+    radial-gradient(circle at 88% 82%, #fecdd3 0 8px, transparent 9px),
+    radial-gradient(circle at 76% 90%, #fbcfe8 0 5px, transparent 6px),
+    radial-gradient(circle at 63% 83%, #fed7aa 0 9px, transparent 10px),
+    radial-gradient(circle at 49% 91%, #fde68a 0 5px, transparent 6px),
+    radial-gradient(circle at 34% 82%, #bbf7d0 0 7px, transparent 8px),
+    radial-gradient(circle at 18% 91%, #bae6fd 0 5px, transparent 6px),
+    radial-gradient(circle at 90% 56%, #ffe4e6 0 12px, transparent 13px),
+    radial-gradient(circle at 73% 63%, #fda4af 0 5px, transparent 6px),
+    radial-gradient(circle at 55% 58%, #fed7aa 0 7px, transparent 8px),
+    radial-gradient(circle at 39% 66%, #fef3c7 0 10px, transparent 11px),
+    radial-gradient(circle at 22% 58%, #dcfce7 0 8px, transparent 9px),
+    radial-gradient(circle at 8% 65%, #fce7f3 0 6px, transparent 7px),
+    radial-gradient(circle at 84% 32%, #fecdd3 0 6px, transparent 7px),
+    radial-gradient(circle at 67% 38%, #fde68a 0 5px, transparent 6px),
+    radial-gradient(circle at 49% 27%, #fbcfe8 0 11px, transparent 12px),
+    radial-gradient(circle at 31% 36%, #fed7aa 0 7px, transparent 8px),
+    radial-gradient(circle at 13% 30%, #bbf7d0 0 8px, transparent 9px),
+    radial-gradient(circle at 80% 10%, #fff1f2 0 13px, transparent 14px),
+    radial-gradient(circle at 59% 9%, #fecdd3 0 5px, transparent 6px),
+    radial-gradient(circle at 38% 14%, #ffedd5 0 10px, transparent 11px),
+    radial-gradient(circle at 16% 8%, #fce7f3 0 6px, transparent 7px);
+}
+
+/* =========================
+   Shared section card
+========================= */
+
+.section-card {
+  position: relative;
+  z-index: 1;
+  border: 1px solid #f8d9df;
+  background:
+    radial-gradient(circle at top left, rgba(255, 241, 242, 0.85), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(255, 247, 237, 0.75), transparent 28%),
+    rgba(255, 255, 255, 0.86);
+  box-shadow:
+    0 8px 24px rgba(220, 169, 177, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+.section-title {
+  font-family: 'Times New Roman', serif;
+  font-style: italic;
+  color: #ef5f8a;
+  letter-spacing: 0.02em;
+}
+
+/* =========================
+   Decorated section dots
+========================= */
+
+.decorated-section-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.decorated-section-card::before,
+.decorated-section-card::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  width: 260px;
+  height: 260px;
+  pointer-events: none;
+  opacity: 0.75;
+  filter: blur(0.2px);
+}
+
+.decorated-section-card::before {
+  top: -55px;
+  left: -65px;
+  background:
+    radial-gradient(circle at 16% 18%, #fecdd3 0 9px, transparent 10px),
+    radial-gradient(circle at 35% 10%, #fed7aa 0 7px, transparent 8px),
+    radial-gradient(circle at 52% 22%, #bbf7d0 0 8px, transparent 9px),
+    radial-gradient(circle at 74% 15%, #fbcfe8 0 6px, transparent 7px),
+    radial-gradient(circle at 22% 48%, #ffe4e6 0 12px, transparent 13px),
+    radial-gradient(circle at 50% 55%, #fde68a 0 8px, transparent 9px),
+    radial-gradient(circle at 78% 50%, #fda4af 0 6px, transparent 7px),
+    radial-gradient(circle at 28% 78%, #fff1f2 0 12px, transparent 13px),
+    radial-gradient(circle at 56% 82%, #ffedd5 0 10px, transparent 11px),
+    radial-gradient(circle at 84% 76%, #dcfce7 0 8px, transparent 9px);
+}
+
+.decorated-section-card::after {
+  right: -70px;
+  bottom: -65px;
+  background:
+    radial-gradient(circle at 84% 78%, #fecdd3 0 8px, transparent 9px),
+    radial-gradient(circle at 65% 88%, #fbcfe8 0 6px, transparent 7px),
+    radial-gradient(circle at 48% 78%, #fed7aa 0 9px, transparent 10px),
+    radial-gradient(circle at 28% 86%, #fde68a 0 6px, transparent 7px),
+    radial-gradient(circle at 78% 48%, #ffe4e6 0 12px, transparent 13px),
+    radial-gradient(circle at 56% 56%, #fda4af 0 6px, transparent 7px),
+    radial-gradient(circle at 30% 48%, #bbf7d0 0 8px, transparent 9px),
+    radial-gradient(circle at 76% 20%, #fff1f2 0 13px, transparent 14px),
+    radial-gradient(circle at 50% 18%, #ffedd5 0 10px, transparent 11px),
+    radial-gradient(circle at 18% 24%, #fce7f3 0 7px, transparent 8px);
+}
+
+.decorated-section-content {
+  position: relative;
+  z-index: 1;
+}
+
+.section-top-icon {
+  margin-inline: auto;
+  margin-bottom: 12px;
+  display: flex;
+  height: 46px;
+  width: 46px;
+  align-items: center;
+  justify-content: center;
   border-radius: 999px;
-  background: #fff1f2;
+  background: rgba(255, 255, 255, 0.9);
+  color: #ff4f7b;
+  box-shadow:
+    0 10px 24px rgba(220, 169, 177, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-.wish-list::-webkit-scrollbar-thumb {
-  border-radius: 999px;
-  background: #fb7185;
+/* =========================
+   Compact wish board
+========================= */
+
+.wish-compact-board {
+  background:
+    radial-gradient(circle at 8% 10%, rgba(251, 207, 232, 0.5), transparent 13%),
+    radial-gradient(circle at 88% 16%, rgba(254, 215, 170, 0.45), transparent 14%),
+    radial-gradient(circle at 12% 88%, rgba(255, 228, 230, 0.65), transparent 14%),
+    radial-gradient(circle at 90% 86%, rgba(220, 252, 231, 0.38), transparent 13%),
+    linear-gradient(180deg, #fff9fa 0%, #fff5f7 100%);
+}
+
+.wish-board-dot {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  width: 230px;
+  height: 230px;
+  opacity: 0.75;
+}
+
+.wish-board-dot-top {
+  top: -45px;
+  left: -55px;
+  background:
+    radial-gradient(circle at 18% 20%, #fecdd3 0 7px, transparent 8px),
+    radial-gradient(circle at 35% 12%, #fbcfe8 0 5px, transparent 6px),
+    radial-gradient(circle at 55% 24%, #fed7aa 0 8px, transparent 9px),
+    radial-gradient(circle at 76% 15%, #fde68a 0 5px, transparent 6px),
+    radial-gradient(circle at 28% 48%, #ffe4e6 0 11px, transparent 12px),
+    radial-gradient(circle at 50% 58%, #fda4af 0 5px, transparent 6px),
+    radial-gradient(circle at 72% 50%, #bbf7d0 0 8px, transparent 9px),
+    radial-gradient(circle at 24% 78%, #fff1f2 0 12px, transparent 13px),
+    radial-gradient(circle at 54% 82%, #ffedd5 0 9px, transparent 10px),
+    radial-gradient(circle at 82% 76%, #fce7f3 0 7px, transparent 8px);
+}
+
+.wish-board-dot-bottom {
+  right: -60px;
+  bottom: -55px;
+  background:
+    radial-gradient(circle at 82% 78%, #fecdd3 0 8px, transparent 9px),
+    radial-gradient(circle at 66% 88%, #fbcfe8 0 5px, transparent 6px),
+    radial-gradient(circle at 48% 78%, #fed7aa 0 8px, transparent 9px),
+    radial-gradient(circle at 28% 86%, #fde68a 0 5px, transparent 6px),
+    radial-gradient(circle at 78% 48%, #ffe4e6 0 12px, transparent 13px),
+    radial-gradient(circle at 56% 56%, #fda4af 0 5px, transparent 6px),
+    radial-gradient(circle at 30% 48%, #bbf7d0 0 8px, transparent 9px),
+    radial-gradient(circle at 76% 20%, #fff1f2 0 13px, transparent 14px),
+    radial-gradient(circle at 50% 18%, #ffedd5 0 10px, transparent 11px),
+    radial-gradient(circle at 18% 24%, #fce7f3 0 7px, transparent 8px);
+}
+
+/* =========================
+   Wish two-row auto marquee
+========================= */
+
+.wish-marquee-two-row {
+  position: relative;
+  mask-image: linear-gradient(90deg,
+      transparent,
+      black 5%,
+      black 95%,
+      transparent);
+}
+
+.wish-marquee-track-two-row {
+  display: grid;
+  width: max-content;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(2, 92px);
+  grid-auto-columns: 240px;
+  gap: 12px;
+  animation: wish-marquee-loop 42s linear infinite;
+  will-change: transform;
+}
+
+.wish-static-two-row {
+  display: grid;
+  width: max-content;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(2, 92px);
+  grid-auto-columns: 240px;
+  gap: 12px;
+}
+
+.wish-marquee-two-row:hover .wish-marquee-track-two-row {
+  animation-play-state: paused;
+}
+
+.wish-float-card {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.wish-float-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(220, 169, 177, 0.18);
+}
+
+@keyframes wish-marquee-loop {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 767px) {
+
+  .decorated-section-card::before,
+  .decorated-section-card::after {
+    width: 190px;
+    height: 190px;
+    opacity: 0.32;
+  }
+
+  .decorated-section-card::before {
+    top: -105px;
+    left: -115px;
+  }
+
+  .decorated-section-card::after {
+    right: -115px;
+    bottom: -105px;
+  }
+
+  .wish-board-dot {
+    width: 180px;
+    height: 180px;
+    opacity: 0.32;
+  }
+
+  .wish-board-dot-top {
+    top: -95px;
+    left: -110px;
+  }
+
+  .wish-board-dot-bottom {
+    right: -110px;
+    bottom: -95px;
+  }
+
+  .section-top-icon {
+    height: 42px;
+    width: 42px;
+    margin-bottom: 10px;
+  }
 }

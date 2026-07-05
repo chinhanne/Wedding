@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { FormEvent, useMemo, useState } from 'react';
 import { Alert, Button, Input, Spin } from 'antd';
 import { useWeddingWishes } from '../../hooks/useWeddingWish';
 import { WeddingIcons } from '../icons/WeddingIcons';
@@ -15,15 +15,12 @@ function formatWishTime(value: Date): string {
     minute: '2-digit',
     day: '2-digit',
     month: '2-digit',
-    year: 'numeric',
   });
 }
 
 export function WishesSection({ guestName }: WishesSectionProps) {
   const [message, setMessage] = useState('');
-
-  const wishListRef = useRef<HTMLDivElement | null>(null);
-  const loadMoreTriggerRef = useRef<HTMLDivElement | null>(null);
+  const [marqueeKey, setMarqueeKey] = useState(0);
 
   const {
     wishes,
@@ -36,6 +33,17 @@ export function WishesSection({ guestName }: WishesSectionProps) {
     loadMoreWishes,
   } = useWeddingWishes();
 
+  const shouldAutoScroll = wishes.length > 1;
+
+  const displayWishes = useMemo(() => {
+    if (!shouldAutoScroll) return wishes;
+
+    const baseWishes =
+      wishes.length % 2 === 1 ? [...wishes, wishes[0]] : wishes;
+
+    return [...baseWishes, ...baseWishes];
+  }, [shouldAutoScroll, wishes]);
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -43,139 +51,141 @@ export function WishesSection({ guestName }: WishesSectionProps) {
 
     if (success) {
       setMessage('');
+      setMarqueeKey((prev) => prev + 1);
     }
   };
 
-  useEffect(() => {
-    const scrollRoot = wishListRef.current;
-    const trigger = loadMoreTriggerRef.current;
+  const handleLoadMore = async () => {
+    if (!hasMore || isLoadingMore) return;
 
-    if (!scrollRoot || !trigger) return;
+    await loadMoreWishes();
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const firstEntry = entries[0];
-
-        if (!firstEntry?.isIntersecting) return;
-        if (!hasMore || isLoadingMore || isInitialLoading) return;
-
-        void loadMoreWishes();
-      },
-      {
-        root: scrollRoot,
-        threshold: 0.8,
-      }
-    );
-
-    observer.observe(trigger);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [hasMore, isInitialLoading, isLoadingMore, loadMoreWishes]);
+    setMarqueeKey((prev) => prev + 1);
+  };
 
   return (
-    <section id="wishes" className="w-full px-5 pb-8 md:px-5 lg:h-full lg:px-0 lg:pb-0">
-      <div className="hflex h-full flex-col rounded-4xl border border-rose-100 bg-white/85 p-5 shadow-sm backdrop-blur md:p-7 lg:p-8">
-        <h2 className="text-center font-serif text-3xl italic text-rose-500">
-          Gửi lời chúc
-        </h2>
+    <section
+      id="wishes"
+      className="w-full px-5 pb-8 md:px-5 lg:h-full lg:px-0 lg:pb-0"
+    >
+      <div className="wish-compact-board relative flex h-full flex-col overflow-hidden rounded-4xl border border-rose-100 p-5 shadow-sm md:p-6 lg:p-8">
+        <div className="wish-board-dot wish-board-dot-top" />
+        <div className="wish-board-dot wish-board-dot-bottom" />
 
-        <p className="mt-2 text-center text-sm leading-relaxed text-stone-500">
-          Lời chúc của bạn sẽ được lưu lại để mọi người cùng xem.
-        </p>
+        <div className="relative z-10">
 
-        <form onSubmit={handleSubmit} className="mt-5 flex gap-2">
-          <Input
-            value={message}
-            onChange={(event) => setMessage(event.target.value)}
-            maxLength={300}
-            placeholder="Nhập lời chúc của bạn..."
-            disabled={isSubmitting}
-            className="h-12!"
-          />
+          <h2 className="section-title mb-6 text-center text-3xl md:text-4xl">
+            Gửi lời chúc
+          </h2>
 
-          <Button
-            htmlType="submit"
-            type="primary"
-            loading={isSubmitting}
-            icon={!isSubmitting ? <WeddingIcons.send /> : undefined}
-            className="h-12! w-12! shrink-0"
-          />
-        </form>
+          <p className="mx-auto mt-2 max-w-md text-center text-sm leading-relaxed text-stone-500">
+            Hãy để lại lời chúc tốt đẹp nhất cho tụi mình nhé!
+          </p>
 
-        {errorMessage && (
-          <Alert
-            type="error"
-            message={errorMessage}
-            showIcon
-            className="mt-4"
-          />
-        )}
+          <form
+            onSubmit={handleSubmit}
+            className="mx-auto mt-5 flex max-w-xl items-center gap-3"
+          >
+            <Input
+              value={message}
+              onChange={(event) => setMessage(event.target.value)}
+              maxLength={300}
+              placeholder="Nhập lời chúc..."
+              disabled={isSubmitting}
+              className="h-11! rounded-full! border-rose-100! bg-white/95! px-4! text-sm! shadow-sm!"
+            />
 
-        <div className="mt-5 flex flex-1 flex-col">
-          <div className="mb-3 flex items-center justify-between">
+            <Button
+              htmlType="submit"
+              type="primary"
+              loading={isSubmitting}
+              icon={!isSubmitting ? <WeddingIcons.send /> : undefined}
+              className="h-11! w-11! shrink-0 rounded-full! border-0! bg-rose-400! shadow-lg! shadow-rose-200!"
+            />
+          </form>
+
+          {errorMessage && (
+            <Alert
+              type="error"
+              message={errorMessage}
+              showIcon
+              className="mt-4"
+            />
+          )}
+
+          <div className="mt-5 flex items-center justify-between">
             <p className="text-sm font-semibold text-stone-700">
-              Lời chúc từ mọi người
+              Lời chúc yêu thương
             </p>
 
-            <span className="rounded-full bg-rose-50 px-3 py-1 text-xs font-medium text-rose-500">
+            <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-rose-500 shadow-sm">
               {wishes.length} đã tải
             </span>
           </div>
+        </div>
 
+        <div className="relative z-10 mt-4 flex min-h-0 flex-1 flex-col">
           {isInitialLoading ? (
-            <div className="flex justify-center rounded-3xl bg-rose-50/70 py-8">
+            <div className="flex w-full justify-center rounded-3xl bg-white/70 py-8">
               <Spin />
             </div>
           ) : wishes.length === 0 ? (
-            <div className="rounded-3xl border border-dashed border-rose-200 bg-rose-50/70 px-4 py-6 text-center">
+            <div className="w-full rounded-3xl border border-dashed border-rose-200 bg-white/70 px-4 py-6 text-center">
               <p className="text-sm text-stone-500">
                 Chưa có lời chúc nào. Bạn là người đầu tiên gửi lời chúc nha.
               </p>
             </div>
           ) : (
-            <div
-              ref={wishListRef}
-              className="wish-list max-h-[380px] space-y-3 overflow-y-auto pr-1 md:max-h-[460px] lg:max-h-none lg:flex-1"
-            >
-              {wishes.map((wish) => (
-                <article
-                  key={wish.id}
-                  className="rounded-3xl border border-rose-100 bg-rose-50/80 px-4 py-3 shadow-sm"
+            <>
+              <div className="wish-marquee-two-row w-full overflow-hidden">
+                <div
+                  key={marqueeKey}
+                  className={
+                    shouldAutoScroll
+                      ? 'wish-marquee-track-two-row'
+                      : 'wish-static-two-row'
+                  }
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
-                      <p className="truncate text-sm font-semibold text-stone-800">
-                        {wish.guestName}
+                  {displayWishes.map((wish, index) => (
+                    <article
+                      key={`${wish.id}-${index}`}
+                      className="wish-float-card h-[92px] rounded-3xl border border-rose-100 bg-white/90 px-4 py-3 shadow-sm"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <p className="truncate text-sm font-semibold text-stone-800">
+                          {wish.guestName}
+                        </p>
+
+                        <time className="shrink-0 text-[10px] text-stone-400">
+                          {formatWishTime(wish.createdAt)}
+                        </time>
+                      </div>
+
+                      <p className="mt-2 max-h-[38px] overflow-hidden whitespace-pre-line break-words text-xs leading-relaxed text-stone-600">
+                        {wish.message}
                       </p>
-                    </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
 
-                    <time className="shrink-0 text-[11px] text-stone-400">
-                      {formatWishTime(wish.createdAt)}
-                    </time>
-                  </div>
-
-                  <p className="mt-2 whitespace-pre-line wrap-break-word text-sm leading-relaxed text-stone-600">
-                    {wish.message}
-                  </p>
-                </article>
-              ))}
-
-              <div ref={loadMoreTriggerRef} className="min-h-8">
-                {isLoadingMore && (
-                  <div className="flex justify-center py-3">
-                    <Spin size="small" />
-                  </div>
-                )}
-
-                {!hasMore && (
-                  <p className="py-3 text-center text-xs text-stone-400">
+              <div className="mt-3 flex justify-center">
+                {hasMore ? (
+                  <button
+                    type="button"
+                    onClick={handleLoadMore}
+                    disabled={isLoadingMore}
+                    className="cursor-pointer text-xs font-semibold text-rose-500 underline-offset-4 hover:text-rose-600 hover:underline disabled:cursor-not-allowed disabled:text-stone-400"
+                  >
+                    {isLoadingMore ? 'Đang tải thêm...' : 'Xem thêm'}
+                  </button>
+                ) : (
+                  <p className="text-xs text-stone-400">
                     Đã xem hết lời chúc rồi nha.
                   </p>
                 )}
               </div>
-            </div>
+            </>
           )}
         </div>
       </div>
