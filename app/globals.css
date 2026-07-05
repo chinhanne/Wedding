@@ -1,26 +1,83 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+}
+
+.petal-shape {
+  display: block;
+  border-radius: 999px 999px 999px 0;
+  background: linear-gradient(135deg, #fecdd3, #fb7185);
+  opacity: 0.8;
+  box-shadow: 0 4px 12px rgb(251 113 133 / 25%);
+}
+
+@keyframes petal-fall {
+  0% {
+    transform: translate3d(0, -60px, 0) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: translate3d(42px, 110vh, 0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.petal-fall {
+  animation-name: petal-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes wish-fall {
+  0% {
+    transform: translateY(-80px) rotate(-4deg);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(420px) rotate(4deg);
+    opacity: 0;
+  }
+}
+
+.wish-fall {
+  top: -80px;
+  animation: wish-fall 9s ease-in-out infinite;
+}
+
+.wish-list {
+  scrollbar-width: thin;
+  scrollbar-color: #fb7185 #fff1f2;
+}
+
+.wish-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.wish-list::-webkit-scrollbar-track {
+  border-radius: 999px;
+  background: #fff1f2;
+}
+
+.wish-list::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: #fb7185;
 }
