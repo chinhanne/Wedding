@@ -18,7 +18,7 @@ export function GuestGate({ onOpen }: GuestGateProps) {
     const trimmedName = name.trim();
 
     if (!trimmedName) {
-      setError('Cho Châu biết tên đi Châu cho 5 chục hehehe!');
+      setError('Nhớ nhập tên nha bạn tui ơi!');
       return;
     }
 
@@ -57,7 +57,8 @@ export function GuestGate({ onOpen }: GuestGateProps) {
           placeholder="Nhập tên của bạn"
           prefix={<WeddingIcons.user className="text-rose-300" />}
           status={error ? 'error' : undefined}
-          className="mb-1"
+          className="mb-1 text-base [&_.ant-input]:text-base"
+          style={{ fontSize: 16 }}
         />
 
         {error ? (
@@ -71,12 +72,12 @@ export function GuestGate({ onOpen }: GuestGateProps) {
           type="primary"
           block
           icon={<WeddingIcons.heart />}
-          className="shadow-lg shadow-rose-200"
+          className="shadow-lg shadow-rose-200 mb-2.5!"
         >
           Mở thiệp
         </Button>
 
-        <p className="mt-5 text-xs text-stone-500">
+        <p className="text-xs text-stone-500">
           Nhập tên để thiệp hiển thị lời mời riêng cho bạn nha.
         </p>
       </form>

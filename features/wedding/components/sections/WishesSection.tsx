@@ -92,7 +92,8 @@ export function WishesSection({ guestName }: WishesSectionProps) {
               maxLength={300}
               placeholder="Nhập lời chúc..."
               disabled={isSubmitting}
-              className="h-11! rounded-full! border-rose-100! bg-white/95! px-4! text-sm! shadow-sm!"
+              className="h-11! rounded-full! border-rose-100! bg-white/95! px-4!  shadow-sm! text-base [&_.ant-input]:text-base"
+              style={{ fontSize: 16 }}
             />
 
             <Button
@@ -107,7 +108,7 @@ export function WishesSection({ guestName }: WishesSectionProps) {
           {errorMessage && (
             <Alert
               type="error"
-              message={errorMessage}
+              title={errorMessage}
               showIcon
               className="mt-4"
             />
@@ -132,7 +133,7 @@ export function WishesSection({ guestName }: WishesSectionProps) {
           ) : wishes.length === 0 ? (
             <div className="w-full rounded-3xl border border-dashed border-rose-200 bg-white/70 px-4 py-6 text-center">
               <p className="text-sm text-stone-500">
-                Chưa có lời chúc nào. Bạn là người đầu tiên gửi lời chúc nha.
+                Chưa có lời chúc nào. Bạn hãy là người đầu tiên gửi lời chúc nha.
               </p>
             </div>
           ) : (
@@ -149,7 +150,7 @@ export function WishesSection({ guestName }: WishesSectionProps) {
                   {displayWishes.map((wish, index) => (
                     <article
                       key={`${wish.id}-${index}`}
-                      className="wish-float-card h-[92px] rounded-3xl border border-rose-100 bg-white/90 px-4 py-3 shadow-sm"
+                      className="wish-float-card h-23 rounded-3xl border border-rose-100 bg-white/90 px-4 py-3 shadow-sm"
                     >
                       <div className="flex items-start justify-between gap-3">
                         <p className="truncate text-sm font-semibold text-stone-800">
@@ -161,7 +162,7 @@ export function WishesSection({ guestName }: WishesSectionProps) {
                         </time>
                       </div>
 
-                      <p className="mt-2 max-h-[38px] overflow-hidden whitespace-pre-line break-words text-xs leading-relaxed text-stone-600">
+                      <p className="mt-2 max-h-9.5 overflow-hidden whitespace-pre-line wrap-break-word text-xs leading-relaxed text-stone-600">
                         {wish.message}
                       </p>
                     </article>

@@ -1,8 +1,7 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Spin } from 'antd';
-import { weddingInfo } from '../constants/wedding';
 import { useConfetti } from '../hooks/useConfetti';
 import { useGuestName } from '../hooks/useGuestName';
 import { useMusicPlayer } from '../hooks/useMusicPlayer';
@@ -14,6 +13,7 @@ import { MapSection } from './sections/MapSection';
 import { MiniGameSection } from './sections/MiniGameSection';
 import { TimelineSection } from './sections/TimeLineSection';
 import { WishesSection } from './sections/WishesSection';
+import { SideFireworks } from './effection/SideFireworks';
 
 export function WeddingPage() {
   const { guestName, isReady, setGuestName } = useGuestName();
@@ -24,6 +24,10 @@ export function WeddingPage() {
   const [isOpened, setIsOpened] = useState(false);
   const [showPetals, setShowPetals] = useState(false);
   const [needsMusicGesture, setNeedsMusicGesture] = useState(false);
+
+  const hasTriedAutoPlayRef = useRef(false);
+
+  const isInvitationOpened = isOpened || Boolean(guestName);
 
   const startMusic = useCallback(async () => {
     const played = await music.play();
@@ -38,6 +42,7 @@ export function WeddingPage() {
 
     confetti.fireOpeningConfetti();
 
+    hasTriedAutoPlayRef.current = true;
     await startMusic();
 
     window.setTimeout(() => {
@@ -46,14 +51,17 @@ export function WeddingPage() {
   };
 
   useEffect(() => {
-    if (!isReady || !guestName || isOpened) return;
+    if (!isReady) return;
+    if (!isInvitationOpened) return;
+    if (hasTriedAutoPlayRef.current) return;
 
-    setIsOpened(true);
+    hasTriedAutoPlayRef.current = true;
+
     void startMusic();
-  }, [guestName, isOpened, isReady, startMusic]);
+  }, [isReady, isInvitationOpened, startMusic]);
 
   useEffect(() => {
-    if (!isOpened || music.isPlaying || !needsMusicGesture) return;
+    if (!isInvitationOpened || music.isPlaying || !needsMusicGesture) return;
 
     const handleFirstGesture = () => {
       void startMusic();
@@ -66,10 +74,10 @@ export function WeddingPage() {
       window.removeEventListener('pointerdown', handleFirstGesture);
       window.removeEventListener('keydown', handleFirstGesture);
     };
-  }, [isOpened, music.isPlaying, needsMusicGesture, startMusic]);
+  }, [isInvitationOpened, music.isPlaying, needsMusicGesture, startMusic]);
 
   useEffect(() => {
-    if (!isOpened) return;
+    if (!isInvitationOpened) return;
 
     const handleVisibleAgain = () => {
       if (document.visibilityState === 'visible') {
@@ -84,7 +92,7 @@ export function WeddingPage() {
       document.removeEventListener('visibilitychange', handleVisibleAgain);
       window.removeEventListener('focus', handleVisibleAgain);
     };
-  }, [isOpened, startMusic]);
+  }, [isInvitationOpened, startMusic]);
 
   if (!isReady) {
     return (
@@ -94,7 +102,7 @@ export function WeddingPage() {
     );
   }
 
-  if (!isOpened) {
+  if (!isInvitationOpened) {
     return (
       <>
         <PetalLayer active />
@@ -106,6 +114,7 @@ export function WeddingPage() {
   return (
     <main className="relative min-h-screen bg-[linear-gradient(180deg,#fff7ed,#fff1f2,#ffffff)] text-stone-800 md:bg-[radial-gradient(circle_at_top_left,#ffe4e6,transparent_35%),radial-gradient(circle_at_top_right,#fed7aa,transparent_32%),linear-gradient(180deg,#fff7ed,#fff1f2,#ffffff)] md:px-6 md:py-8 lg:px-10">
       <PetalLayer active={showPetals} />
+      <SideFireworks active={isInvitationOpened} intervalMs={3500} />
 
       {needsMusicGesture && !music.isPlaying && (
         <div className="fixed left-1/2 top-4 z-60 -translate-x-1/2 rounded-full bg-black/60 px-4 py-2 text-xs font-medium text-white shadow-lg backdrop-blur-md">
@@ -150,10 +159,10 @@ export function WeddingPage() {
             <MapSection />
           </div>
         </div>
+
         <footer className="px-5 pb-10 text-center md:px-8 lg:pb-12">
           <p className="mx-auto max-w-3xl text-center font-serif text-xl italic text-rose-500 md:text-2xl">
-            CẢM ƠN BẠN ĐÃ ĐẾN CHUNG VUI CÙNG TỤI MÌNH{' '}
-            <WeddingIcons.heart />
+            CẢM ƠN BẠN ĐÃ ĐẾN CHUNG VUI CÙNG TỤI MÌNH <WeddingIcons.heart />
           </p>
         </footer>
       </div>
