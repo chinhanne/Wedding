@@ -1,8 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { MAX_GUEST_NAME_LENGTH } from '../constants/validation';
 
 const GUEST_NAME_KEY = 'wedding_guest_name';
+
+function normalizeGuestName(name: string): string {
+  return name.trim().slice(0, MAX_GUEST_NAME_LENGTH);
+}
 
 type GuestNameState = {
   name: string;
@@ -25,12 +30,22 @@ export function useGuestName(): UseGuestNameResult {
 
   // Hydrate from localStorage after mount (client-only)
   useEffect(() => {
-    const saved = window.localStorage.getItem(GUEST_NAME_KEY);
-    setState({ name: saved ?? '', isReady: true });
+    let cancelled = false;
+
+    queueMicrotask(() => {
+      if (cancelled) return;
+
+      const saved = window.localStorage.getItem(GUEST_NAME_KEY);
+      setState({ name: normalizeGuestName(saved ?? ''), isReady: true });
+    });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const setGuestName = (name: string) => {
-    const trimmedName = name.trim();
+    const trimmedName = normalizeGuestName(name);
     setState({ name: trimmedName, isReady: true });
     window.localStorage.setItem(GUEST_NAME_KEY, trimmedName);
   };

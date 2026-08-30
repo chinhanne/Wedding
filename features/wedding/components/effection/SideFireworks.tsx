@@ -32,6 +32,11 @@ type FireworkParticleStyle = CSSProperties & {
   '--duration': string;
 };
 
+type FireworkBurstStyle = CSSProperties & {
+  '--launch-distance': string;
+  '--launch-drift': string;
+};
+
 type MobileSparkleStyle = CSSProperties & {
   '--size': string;
   '--duration': string;
@@ -39,8 +44,8 @@ type MobileSparkleStyle = CSSProperties & {
   '--move-x': string;
 };
 
-const FIREWORK_LIFETIME_MS = 2400;
-const PARTICLE_COUNT = 42;
+const FIREWORK_LIFETIME_MS = 3100;
+const PARTICLE_COUNT = 64;
 
 const FIREWORK_COLORS = [
   '#ff1744',
@@ -72,15 +77,17 @@ const MOBILE_SPARKLES = Array.from({ length: 20 }, (_, index) => ({
 
 function createParticles(): FireworkParticle[] {
   return Array.from({ length: PARTICLE_COUNT }, (_, index) => {
-    const angle = Math.random() * Math.PI * 2;
-    const distance = 80 + Math.random() * 150;
+    const angle =
+      (index / PARTICLE_COUNT) * Math.PI * 2 +
+      (Math.random() - 0.5) * 0.12;
+    const distance = 145 + Math.random() * 175;
 
     return {
       id: index,
       x: Math.cos(angle) * distance,
       y: Math.sin(angle) * distance,
-      size: 4 + Math.random() * 5,
-      duration: 1100 + Math.random() * 700,
+      size: 2.5 + Math.random() * 3.5,
+      duration: 1400 + Math.random() * 650,
       color: FIREWORK_COLORS[index % FIREWORK_COLORS.length],
     };
   });
@@ -101,7 +108,7 @@ export function SideFireworks({
     const createBurst = (side: FireworkSide): FireworkBurst => ({
       id: nextIdRef.current++,
       side,
-      top: 18 + Math.random() * 64,
+      top: 15 + Math.random() * 45,
       particles: createParticles(),
     });
 
@@ -187,19 +194,20 @@ export function SideFireworks({
 
 function Firework({ burst }: { burst: FireworkBurst }) {
   const isLeft = burst.side === 'left';
+  const burstStyle: FireworkBurstStyle = {
+    top: `${burst.top}%`,
+    '--launch-distance': `${100 - burst.top}vh`,
+    '--launch-drift': isLeft ? '-36px' : '36px',
+  };
 
   return (
     <div
       className={`side-firework-burst ${
         isLeft ? 'side-firework-burst-left' : 'side-firework-burst-right'
       }`}
-      style={{ top: `${burst.top}%` }}
+      style={burstStyle}
     >
-      <span
-        className={`side-firework-rocket ${
-          isLeft ? 'side-firework-rocket-left' : 'side-firework-rocket-right'
-        }`}
-      />
+      <span className="side-firework-rocket" />
 
       <span className="side-firework-core" />
 

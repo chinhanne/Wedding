@@ -3,8 +3,13 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+export type WeddingImageItem = {
+  src: string;
+  objectPosition?: string;
+};
+
 type PhotoSwiperProps = {
-  images: string[];
+  images: (string | WeddingImageItem)[];
 };
 
 export function PhotoSwiper({ images }: PhotoSwiperProps) {
@@ -15,7 +20,7 @@ export function PhotoSwiper({ images }: PhotoSwiperProps) {
 
     const intervalId = window.setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % images.length);
-    }, 4000);
+    }, 4500);
 
     return () => {
       window.clearInterval(intervalId);
@@ -24,35 +29,43 @@ export function PhotoSwiper({ images }: PhotoSwiperProps) {
 
   if (images.length === 0) {
     return (
-      <div className="h-[620px] rounded-b-4xl bg-linear-to-br from-rose-100 to-orange-100 md:h-[760px] lg:h-[760px]" />
+      <div className="h-[580px] sm:h-[640px] md:h-[720px] lg:h-[750px] rounded-b-4xl bg-gradient-to-br from-rose-100 to-amber-50" />
     );
   }
 
+  const normalizedImages = images.map((img) =>
+    typeof img === 'string'
+      ? { src: img, objectPosition: 'center 20%' }
+      : { src: img.src, objectPosition: img.objectPosition ?? 'center 20%' }
+  );
+
   return (
-    <div className="relative h-[720px] w-full overflow-hidden bg-stone-200 md:h-[820px] lg:h-[760px]">
-      {images.map((image, index) => (
+    <div className="relative h-[600px] sm:h-[660px] md:h-[720px] lg:h-[750px] w-full overflow-hidden bg-stone-900">
+      {normalizedImages.map((imageItem, index) => (
         <Image
-          key={image}
-          src={image}
-          alt="Ảnh cưới"
+          key={imageItem.src}
+          src={imageItem.src}
+          alt="Ảnh cưới cô dâu & chú rể"
           fill
           priority={index === 0}
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 768px, 1280px"
-          className={`object-cover object-center transition duration-1000 lg:object-[center_35%] ${index === activeIndex
+          style={{ objectPosition: imageItem.objectPosition }}
+          className={`object-cover transition-all duration-1000 ${
+            index === activeIndex
               ? 'scale-100 opacity-100'
-              : 'scale-105 opacity-0'
-            }`}
+              : 'scale-105 opacity-0 pointer-events-none'
+          }`}
         />
       ))}
 
-      <div className="absolute inset-0 bg-linear-to-b from-black/5 via-black/10 to-black/40" />
-
-      <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-2">
-        {images.map((image, index) => (
+      {/* Centered Dots Indicator located below the 2 action buttons */}
+      <div className="absolute bottom-2.5 left-1/2 z-30 -translate-x-1/2 flex items-center justify-center gap-1.5">
+        {normalizedImages.map((imageItem, index) => (
           <span
-            key={image}
-            className={`h-2 rounded-full transition-all ${index === activeIndex ? 'w-6 bg-white' : 'w-2 bg-white/50'
-              }`}
+            key={imageItem.src}
+            className={`h-1.5 rounded-full transition-all duration-500 ${
+              index === activeIndex ? 'w-6 bg-white shadow-md' : 'w-2 bg-white/50'
+            }`}
           />
         ))}
       </div>

@@ -1,7 +1,6 @@
 import type {
   MiniGameQuestion,
   WeddingTimelineItem,
-  WeddingWish,
 } from '../types';
 
 export const weddingInfo = {
@@ -9,7 +8,7 @@ export const weddingInfo = {
   groomName: 'Minh Đức',
   weddingStartDate: '2026-09-19T10:00:00+07:00',
   weddingEndDate: '2026-09-20T23:59:59+07:00',
-  displayDate: '19.09.2026 - 20.09.2026',
+  displayDate: '10:00 Sáng | 19.09.2026',
   venueName: 'Ấp Bình Linh, Xã Mỹ Hiệp, Tỉnh Đồng Tháp',
   address: '194 Hoàng Văn Thụ, P.9, Q. Phú Nhuận, TP.HCM',
   mapDirectionUrl:
@@ -19,12 +18,14 @@ export const weddingInfo = {
 };
 
 export const weddingImages = [
-  '/images/DSC_4549.png',
-  '/images/DSC_4852.png',
-  '/images/DSC_5098.png',
-  '/images/DSC_5105.png',
-  '/images/DSC_5264.png',
-  '/images/DSC_5650.png',
+  { src: '/images/DSC_4549.png', objectPosition: 'center 35%' },
+  { src: '/images/h1.jpg', objectPosition: 'center 10%' },
+  { src: '/images/h2.jpg', objectPosition: 'center 16%' },
+  { src: '/images/h3.jpg', objectPosition: 'center 16%' },
+  { src: '/images/DSC_5098.png', objectPosition: 'center 30%' },
+  { src: '/images/DSC_5105.png', objectPosition: 'center 30%' },
+  { src: '/images/DSC_5264.png', objectPosition: 'center 30%' },
+  { src: '/images/DSC_5650.png', objectPosition: 'center 40%' },
 ];
 
 export const timelineItems: WeddingTimelineItem[] = [
@@ -32,13 +33,13 @@ export const timelineItems: WeddingTimelineItem[] = [
     time: '10:00',
     title: 'Đón khách',
     description: 'Cùng check-in và lưu lại vài tấm ảnh xinh.',
-    iconKey: 'flower',
+    iconKey: 'user',
   },
   {
     time: '11:00',
     title: 'Tiệc mừng',
     description: 'Ăn uống, nâng ly và chung vui cùng tụi mình.',
-    iconKey: 'ring',
+    iconKey: 'gift',
   },
   {
     time: '12:00',
@@ -66,5 +67,29 @@ export const miniGameQuestions: MiniGameQuestion[] = [
     question: 'Món tụi mình hay ăn cùng nhau nhất?',
     options: ['Trà sữa', 'Bún bò', 'Lẩu', 'Pizza'],
     answerIndex: 2,
+  },
+  {
+    id: '4',
+    question: 'Ai thường là người đến trễ hơn?',
+    options: ['Cô dâu', 'Chú rể', 'Cả hai', 'Chưa bao giờ trễ'],
+    answerIndex: 0,
+  },
+  {
+    id: '5',
+    question: 'Cuối tuần tụi mình thích làm gì nhất?',
+    options: ['Đi xem phim', 'Đi ăn', 'Du lịch ngắn ngày', 'Ở nhà ngủ'],
+    answerIndex: 2,
+  },
+  {
+    id: '6',
+    question: 'Ai là người nói lời yêu trước?',
+    options: ['Cô dâu', 'Chú rể', 'Cùng một lúc', 'Bạn bè nói hộ'],
+    answerIndex: 1,
+  },
+  {
+    id: '7',
+    question: 'Biệt danh tụi mình hay gọi nhau là gì?',
+    options: ['Bé yêu', 'Bạn đời', 'Heo', 'Bí mật nha'],
+    answerIndex: 3,
   },
 ];

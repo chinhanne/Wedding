@@ -12,103 +12,111 @@ type HeroSectionProps = {
   onToggleMusic: () => void;
 };
 
-export function HeroSection({
-  guestName,
-  isMusicPlaying,
-  onToggleMusic,
-}: HeroSectionProps) {
+export function HeroSection({}: HeroSectionProps) {
   return (
-    <section className="relative overflow-hidden rounded-b-4xl md:rounded-t-4xl">
+    <section className="relative overflow-hidden rounded-b-[32px] md:rounded-t-[36px]">
+      {/* Background Photo Slider */}
       <PhotoSwiper images={weddingImages} />
 
-      <div className="absolute inset-0 rounded-b-4xl bg-linear-to-b from-black/5 via-black/10 to-black/40 md:rounded-t-4xl" />
+      {/* Gentle Vignettes at extreme top and bottom ONLY */}
+      <div className="pointer-events-none absolute inset-0 flex flex-col justify-between">
+        <div className="h-44 bg-gradient-to-b from-black/75 via-black/30 to-transparent sm:h-52" />
+        <div className="h-68 bg-gradient-to-t from-black/85 via-black/40 to-transparent sm:h-76" />
+      </div>
 
-      <div className="absolute inset-0 flex items-center px-5 md:justify-center md:px-8 lg:px-10">
-        <div className="w-full rounded-4xl border border-white/25 bg-black/35 p-5 shadow-2xl md:max-w-xl md:p-7 lg:max-w-2xl lg:bg-black/30 lg:p-8">
-          <p className="mb-2 text-center text-sm uppercase tracking-[0.3em] text-white/80 drop-shadow md:text-base">
-            The Wedding Of
-          </p>
+      {/* Hero Content - Placed at Top and Bottom */}
+      <div className="absolute inset-0 flex flex-col justify-between p-4 sm:p-6 md:p-8">
+        
+        {/* Top Header: Couple Names */}
+        <div className="text-center pt-2 sm:pt-4">
+          <div className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-amber-300/70 bg-black/30 px-4 py-0.5 sm:py-1 backdrop-blur-xs shadow-md">
+            <span className="text-amber-300 text-xs">✦</span>
+            <p className="font-playfair text-[10px] sm:text-xs uppercase tracking-[0.35em] text-amber-100 font-semibold">
+              The Wedding Celebration
+            </p>
+            <span className="text-amber-300 text-xs">✦</span>
+          </div>
 
-          <h2
-            className="text-center font-serif text-4xl italic leading-snug md:text-5xl lg:text-6xl"
-            style={{
-              textShadow:
-                '0 2px 12px rgba(0,0,0,0.7), 0 0 4px rgba(0,0,0,0.5)',
-            }}
-          >
-            <span className="block text-white">{weddingInfo.groomName}</span>
-            <span className="my-1 block text-2xl text-white md:text-3xl">&</span>
-            <span className="block text-white">{weddingInfo.brideName}</span>
-          </h2>
+          <h1 className="mt-2 text-center drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
+            <span className="block font-cormorant text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-wide text-white">
+              {weddingInfo.groomName}
+            </span>
+            <span className="my-0.5 block font-script text-3xl sm:text-4xl md:text-5xl text-rose-200 drop-shadow-md">
+              &
+            </span>
+            <span className="block font-cormorant text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-wide text-white">
+              {weddingInfo.brideName}
+            </span>
+          </h1>
+        </div>
 
-          <p
-            className="mt-3 text-center text-lg font-bold text-[#f0b4bb] md:text-xl"
-            style={{
-              textShadow: '0 1px 6px rgba(0,0,0,0.6)',
-            }}
-          >
-            {weddingInfo.displayDate}
-          </p>
+        {/* Bottom Section: Date, Countdown, Quick Navigation Buttons */}
+        <div className="w-full max-w-sm sm:max-w-md mx-auto text-center pb-6 sm:pb-7">
+          
+          {/* Wedding Date Badge */}
+          <div className="inline-flex items-center gap-2 rounded-full border border-amber-300/80 bg-black/50 px-5 py-1.5 backdrop-blur-xs shadow-lg">
+            <WeddingIcons.calendar style={{ color: '#fde047', fontSize: 16 }} />
+            <span className="font-sans text-xs sm:text-sm md:text-base font-bold tracking-wide text-amber-200">
+              {weddingInfo.displayDate}
+            </span>
+          </div>
 
+          {/* Compact Countdown Clock */}
           <Countdown
             startDate={weddingInfo.weddingStartDate}
             endDate={weddingInfo.weddingEndDate}
           />
 
-          <p className="mt-3! mb-1! text-center text-base text-white md:mt-5! md:text-lg">
-            Thân mời{' '}
-            <span className="font-semibold text-[#f0b4bb]">{guestName}</span>{' '}
-            đến dự tiệc rượu chung vui cùng gia đình chúng tôi tại:
-          </p>
-
-          <p className="mb-1! text-center text-xl font-bold text-white md:text-2xl">
-            TƯ GIA
-          </p>
-
-          <p className="text-center text-base font-bold leading-relaxed text-white md:text-lg">
-            Ấp Bình Linh, Xã Mỹ Hiệp, Tỉnh Đồng Tháp
-          </p>
-
-          <div className="mt-5 grid grid-cols-2 gap-3 md:mx-auto md:mt-7 md:max-w-md">
+          {/* Quick Action Navigation Buttons */}
+          <div className="mt-2.5 grid grid-cols-2 gap-2.5 sm:gap-3">
             <Button
               href="#timeline"
-              icon={<WeddingIcons.calendar />}
+              icon={<WeddingIcons.calendar style={{ color: '#ffffff', fontSize: 14 }} />}
               className="
-              h-12!
-              rounded-full!
-              border-white/30!
-              bg-linear-to-r!
-              from-rose-400/90!
-              to-pink-300/90!
-              font-semibold!
-              text-white!
-              shadow-lg!
-              shadow-rose-950/20!
-              md:h-13!
-            "
+                h-11! sm:h-12!
+                rounded-full!
+                border-0!
+                bg-gradient-to-r!
+                from-rose-500!
+                to-pink-600!
+                text-xs! sm:text-sm!
+                font-bold!
+                text-white!
+                shadow-lg!
+                shadow-rose-950/40!
+                hover:scale-[1.03]!
+                active:scale-[0.98]!
+                transition-all!
+              "
             >
-              Lịch cưới
+              Lịch Cưới
             </Button>
 
             <Button
               href="#map"
-              icon={<WeddingIcons.map />}
+              icon={<WeddingIcons.map style={{ color: '#ffffff', fontSize: 14 }} />}
               className="
-              h-12!
-              rounded-full!
-              border-white/30!
-              bg-white/20!
-              font-semibold!
-              text-white!
-              shadow-lg!
-              shadow-black/20!
-              md:h-13!
-            "
+                h-11! sm:h-12!
+                rounded-full!
+                border-2!
+                border-white/70!
+                bg-black/45!
+                text-xs! sm:text-sm!
+                font-bold!
+                text-white!
+                shadow-lg!
+                shadow-black/40!
+                hover:bg-black/60!
+                hover:scale-[1.03]!
+                active:scale-[0.98]!
+                transition-all!
+              "
             >
-              Bản đồ
+              Bản Đồ Chỉ Đường
             </Button>
           </div>
         </div>
+
       </div>
     </section>
   );
