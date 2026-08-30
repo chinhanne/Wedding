@@ -68,17 +68,12 @@ export function Countdown({ startDate, endDate }: CountdownProps) {
 
   if (status === 'during') {
     return (
-      <div className="mt-4 rounded-3xl border border-white/40 bg-white/80 px-4 py-4 text-center shadow-sm backdrop-blur">
-        <p className="text-sm uppercase tracking-[0.25em] text-rose-500">
-          Today
+      <div className="my-2 rounded-xl border border-amber-300/80 bg-black/55 px-4 py-2 text-center shadow-lg backdrop-blur-xs">
+        <p className="font-playfair text-[10px] uppercase tracking-[0.25em] text-amber-300 font-bold">
+          ✦ Happy Wedding Day ✦
         </p>
-
-        <p className="mt-1 font-serif text-2xl italic text-stone-800">
-          Hôm nay là ngày cưới
-        </p>
-
-        <p className="mt-1 text-sm text-stone-500">
-          Cảm ơn bạn đã đến chung vui cùng tụi mình.
+        <p className="font-cormorant text-lg sm:text-xl font-bold italic text-white">
+          Hôm nay là ngày hôn lễ
         </p>
       </div>
     );
@@ -86,11 +81,10 @@ export function Countdown({ startDate, endDate }: CountdownProps) {
 
   if (status === 'after') {
     return (
-      <div className="mt-4 rounded-3xl border border-white/40 bg-white/80 px-4 py-4 text-center shadow-sm backdrop-blur">
-        <p className="font-serif text-2xl italic text-rose-500">Cảm ơn bạn</p>
-
-        <p className="mt-1 text-sm text-stone-500">
-          Ngày vui đã diễn ra, tụi mình cảm ơn bạn rất nhiều.
+      <div className="my-2 rounded-xl border border-rose-300/80 bg-black/55 px-4 py-2 text-center shadow-lg backdrop-blur-xs">
+        <p className="font-script text-2xl text-rose-200">Cảm ơn bạn</p>
+        <p className="text-xs text-stone-200 font-light">
+          Ngày vui đã diễn ra trọn vẹn!
         </p>
       </div>
     );
@@ -118,17 +112,20 @@ export function Countdown({ startDate, endDate }: CountdownProps) {
   ];
 
   return (
-    <div className="mt-4 grid grid-cols-4 gap-2">
+    <div className="my-2 grid grid-cols-4 gap-1.5 sm:gap-2.5 max-w-[300px] sm:max-w-xs mx-auto">
       {items.map((item) => (
         <div
           key={item.label}
-          className="rounded-2xl border border-white/50 bg-white/75 py-3 text-center shadow-sm backdrop-blur"
+          className="group relative overflow-hidden rounded-xl sm:rounded-2xl border border-white/40 bg-black/45 px-1 py-1.5 sm:py-2 text-center shadow-lg backdrop-blur-xs transition-all hover:bg-black/60"
         >
-          <p className="mb-0! text-xl font-bold text-rose-500">
+          {/* Subtle Golden Top Border */}
+          <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-amber-300 to-transparent" />
+          
+          <p className="mb-0 font-cormorant text-xl sm:text-2xl font-bold leading-tight text-amber-200 tabular-nums drop-shadow">
             {item.value.toString().padStart(2, '0')}
           </p>
 
-          <p className="text-[11px] uppercase tracking-wide text-stone-500">
+          <p className="mt-0.5 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-white">
             {item.label}
           </p>
         </div>

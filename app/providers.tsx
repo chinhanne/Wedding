@@ -12,26 +12,36 @@ export function Providers({ children }: ProvidersProps) {
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: '#fb7185',
-          borderRadius: 18,
+          colorPrimary: '#e11d48',
+          colorInfo: '#d4af37',
+          colorSuccess: '#059669',
+          borderRadius: 16,
           fontFamily:
-            'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+            'var(--font-sans), Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+          colorText: '#3b2f2f',
+          colorTextSecondary: '#786565',
         },
         components: {
           Button: {
-            controlHeight: 44,
-            borderRadius: 999,
-            fontWeight: 600,
-          },
-          Input: {
             controlHeight: 46,
             borderRadius: 999,
+            fontWeight: 600,
+            primaryShadow: '0 8px 20px -4px rgba(225, 29, 72, 0.35)',
+            defaultBorderColor: 'rgba(225, 29, 72, 0.2)',
+            defaultColor: '#4a3b32',
+          },
+          Input: {
+            controlHeight: 48,
+            borderRadius: 16,
+            colorBorder: '#f0dcd9',
+            activeBorderColor: '#e11d48',
+            hoverBorderColor: '#fda4af',
           },
           Modal: {
-            borderRadiusLG: 28,
+            borderRadiusLG: 24,
           },
           Card: {
-            borderRadiusLG: 28,
+            borderRadiusLG: 24,
           },
         },
       }}
@@ -39,4 +49,4 @@ export function Providers({ children }: ProvidersProps) {
       <AntdApp>{children}</AntdApp>
     </ConfigProvider>
   );
-}
+}

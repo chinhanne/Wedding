@@ -4,23 +4,26 @@ import {
   CalendarOutlined,
   CameraOutlined,
   ClockCircleOutlined,
+  CoffeeOutlined,
+  CrownOutlined,
   EnvironmentOutlined,
   GiftOutlined,
   HeartFilled,
+  HeartOutlined,
   HomeOutlined,
   SendOutlined,
+  SmileOutlined,
   SoundOutlined,
+  StarOutlined,
   TrophyOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-
-import { FaGamepad, FaGlassCheers } from 'react-icons/fa';
-import { GiBigDiamondRing, GiFlowerPot } from 'react-icons/gi';
 
 import type { WeddingIconKey } from '../../types';
 
 type WeddingIconProps = {
   className?: string;
+  style?: React.CSSProperties;
 };
 
 export const WeddingIcons: Record<
@@ -39,8 +42,8 @@ export const WeddingIcons: Record<
   home: HomeOutlined,
   trophy: TrophyOutlined,
 
-  game: FaGamepad,
-  ring: GiBigDiamondRing,
-  flower: GiFlowerPot,
-  cheers: FaGlassCheers,
+  game: StarOutlined,
+  ring: HeartOutlined,
+  flower: UserOutlined,
+  cheers: CoffeeOutlined,
 };

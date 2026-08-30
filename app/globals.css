@@ -1,428 +1,410 @@
 @import "tailwindcss";
 
+:root {
+  --color-ivory: #fdfbf7;
+  --color-blush: #fff1f2;
+  --color-rose-deep: #be123c;
+  --color-rose-main: #e11d48;
+  --color-gold: #d4af37;
+  --color-gold-light: #f3e7be;
+  --color-gold-dark: #b8860b;
+  --color-charcoal: #2d2424;
+  --color-text-subtle: #6e5e5e;
+  --wish-card-width: 295px;
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
   min-height: 100vh;
-  background:
-    radial-gradient(circle at 8% 8%, rgba(255, 205, 214, 0.75), transparent 18%),
-    radial-gradient(circle at 92% 6%, rgba(255, 225, 190, 0.8), transparent 20%),
-    radial-gradient(circle at 12% 78%, rgba(255, 235, 240, 0.75), transparent 20%),
-    radial-gradient(circle at 88% 82%, rgba(220, 252, 231, 0.45), transparent 18%),
-    linear-gradient(180deg, #fff9f7 0%, #fff5f7 45%, #fffdfb 100%);
-  color: #5f5353;
+  background-color: #faf5f0;
+  background-image: 
+    radial-gradient(circle at 15% 10%, rgba(254, 226, 226, 0.6), transparent 30%),
+    radial-gradient(circle at 85% 15%, rgba(254, 243, 199, 0.5), transparent 28%),
+    radial-gradient(circle at 50% 50%, rgba(255, 241, 242, 0.5), transparent 45%),
+    radial-gradient(circle at 10% 85%, rgba(254, 242, 242, 0.7), transparent 35%),
+    radial-gradient(circle at 90% 90%, rgba(254, 240, 138, 0.3), transparent 30%);
+  color: var(--color-charcoal);
+  font-family: var(--font-sans), Montserrat, -apple-system, sans-serif;
+  overflow-x: hidden;
 }
 
-/* =========================
-   Petal effect
-========================= */
+/* ==========================================================================
+   Typography Helpers
+   ========================================================================== */
+
+.font-cormorant {
+  font-family: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-playfair {
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+}
+
+.font-script {
+  font-family: var(--font-script), 'Great Vibes', cursive;
+}
+
+.font-sans {
+  font-family: var(--font-sans), Montserrat, sans-serif;
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #c59b27 0%, #e5c158 50%, #9e7811 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.rose-gold-text {
+  background: linear-gradient(135deg, #e11d48 0%, #f43f5e 50%, #fb7185 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ==========================================================================
+   Petal & Sparkle Effects
+   ========================================================================== */
 
 .petal-shape {
   display: block;
   border-radius: 999px 999px 999px 0;
   background: linear-gradient(135deg, #fecdd3, #fb7185);
-  opacity: 0.8;
-  box-shadow: 0 4px 12px rgb(251 113 133 / 25%);
+  opacity: 0.75;
+  box-shadow: 0 4px 12px rgba(251, 113, 133, 0.25);
+  filter: drop-shadow(0 2px 4px rgba(244, 63, 94, 0.15));
 }
 
 @keyframes petal-fall {
   0% {
-    transform: translate3d(0, -60px, 0) rotate(0deg);
+    transform: translate3d(0, -60px, 0) rotate(0deg) scale(0.8);
     opacity: 0;
   }
-
-  10% {
+  15% {
     opacity: 0.9;
   }
-
+  90% {
+    opacity: 0.8;
+  }
   100% {
-    transform: translate3d(42px, 110vh, 0) rotate(360deg);
+    transform: translate3d(60px, 110vh, 0) rotate(420deg) scale(1.05);
     opacity: 0;
   }
 }
 
 .petal-fall {
   animation-name: petal-fall;
-  animation-timing-function: linear;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   animation-iteration-count: infinite;
 }
 
-/* =========================
-   Old wish fall effect
-========================= */
-
-@keyframes wish-fall {
-  0% {
-    transform: translateY(-80px) rotate(-4deg);
-    opacity: 0;
-  }
-
-  15% {
-    opacity: 1;
-  }
-
-  80% {
-    opacity: 1;
-  }
-
-  100% {
-    transform: translateY(420px) rotate(4deg);
-    opacity: 0;
-  }
-}
-
-.wish-fall {
-  top: -80px;
-  animation: wish-fall 9s ease-in-out infinite;
-}
-
-/* =========================
-   Wedding shell
-========================= */
+/* ==========================================================================
+   Wedding Shell & Container
+   ========================================================================== */
 
 .wedding-shell {
   position: relative;
   isolation: isolate;
-  background:
-    radial-gradient(circle at 16% 10%, rgba(255, 241, 242, 0.9), transparent 20%),
-    radial-gradient(circle at 84% 14%, rgba(255, 247, 237, 0.95), transparent 22%),
-    linear-gradient(180deg, #fffdfc 0%, #fff8f9 52%, #fffdfb 100%);
-  box-shadow: 0 20px 60px rgba(201, 143, 153, 0.18);
+  background: #ffffff;
+  border-radius: 36px;
+  box-shadow: 
+    0 25px 70px -15px rgba(225, 29, 72, 0.08),
+    0 10px 30px -10px rgba(212, 175, 55, 0.06),
+    0 0 0 1px rgba(244, 114, 182, 0.12);
 }
 
-.wedding-shell>* {
-  position: relative;
-  z-index: 1;
-}
-
-.wedding-shell::before {
-  content: '';
-  position: absolute;
-  top: -18px;
-  left: -18px;
-  z-index: 0;
-  width: 260px;
-  height: 260px;
-  pointer-events: none;
-  opacity: 0.85;
-  filter: blur(0.2px);
-  background:
-    radial-gradient(circle at 12% 18%, #fecdd3 0 7px, transparent 8px),
-    radial-gradient(circle at 23% 10%, #fbcfe8 0 5px, transparent 6px),
-    radial-gradient(circle at 36% 17%, #fed7aa 0 8px, transparent 9px),
-    radial-gradient(circle at 51% 9%, #fde68a 0 4px, transparent 5px),
-    radial-gradient(circle at 68% 18%, #bbf7d0 0 6px, transparent 7px),
-    radial-gradient(circle at 82% 12%, #bae6fd 0 5px, transparent 6px),
-    radial-gradient(circle at 10% 43%, #ffe4e6 0 11px, transparent 12px),
-    radial-gradient(circle at 25% 36%, #fda4af 0 4px, transparent 5px),
-    radial-gradient(circle at 42% 42%, #fed7aa 0 7px, transparent 8px),
-    radial-gradient(circle at 60% 35%, #fef3c7 0 9px, transparent 10px),
-    radial-gradient(circle at 78% 42%, #dcfce7 0 7px, transparent 8px),
-    radial-gradient(circle at 92% 36%, #fce7f3 0 5px, transparent 6px),
-    radial-gradient(circle at 15% 68%, #fecdd3 0 6px, transparent 7px),
-    radial-gradient(circle at 32% 62%, #fde68a 0 5px, transparent 6px),
-    radial-gradient(circle at 47% 73%, #fbcfe8 0 10px, transparent 11px),
-    radial-gradient(circle at 66% 64%, #fed7aa 0 6px, transparent 7px),
-    radial-gradient(circle at 84% 70%, #bbf7d0 0 8px, transparent 9px),
-    radial-gradient(circle at 22% 88%, #fff1f2 0 12px, transparent 13px),
-    radial-gradient(circle at 42% 91%, #fecdd3 0 5px, transparent 6px),
-    radial-gradient(circle at 63% 86%, #ffedd5 0 9px, transparent 10px),
-    radial-gradient(circle at 82% 92%, #fce7f3 0 6px, transparent 7px);
-}
-
-.wedding-shell::after {
-  content: '';
-  position: absolute;
-  right: -22px;
-  bottom: -22px;
-  z-index: 0;
-  width: 300px;
-  height: 300px;
-  pointer-events: none;
-  opacity: 0.9;
-  filter: blur(0.2px);
-  background:
-    radial-gradient(circle at 88% 82%, #fecdd3 0 8px, transparent 9px),
-    radial-gradient(circle at 76% 90%, #fbcfe8 0 5px, transparent 6px),
-    radial-gradient(circle at 63% 83%, #fed7aa 0 9px, transparent 10px),
-    radial-gradient(circle at 49% 91%, #fde68a 0 5px, transparent 6px),
-    radial-gradient(circle at 34% 82%, #bbf7d0 0 7px, transparent 8px),
-    radial-gradient(circle at 18% 91%, #bae6fd 0 5px, transparent 6px),
-    radial-gradient(circle at 90% 56%, #ffe4e6 0 12px, transparent 13px),
-    radial-gradient(circle at 73% 63%, #fda4af 0 5px, transparent 6px),
-    radial-gradient(circle at 55% 58%, #fed7aa 0 7px, transparent 8px),
-    radial-gradient(circle at 39% 66%, #fef3c7 0 10px, transparent 11px),
-    radial-gradient(circle at 22% 58%, #dcfce7 0 8px, transparent 9px),
-    radial-gradient(circle at 8% 65%, #fce7f3 0 6px, transparent 7px),
-    radial-gradient(circle at 84% 32%, #fecdd3 0 6px, transparent 7px),
-    radial-gradient(circle at 67% 38%, #fde68a 0 5px, transparent 6px),
-    radial-gradient(circle at 49% 27%, #fbcfe8 0 11px, transparent 12px),
-    radial-gradient(circle at 31% 36%, #fed7aa 0 7px, transparent 8px),
-    radial-gradient(circle at 13% 30%, #bbf7d0 0 8px, transparent 9px),
-    radial-gradient(circle at 80% 10%, #fff1f2 0 13px, transparent 14px),
-    radial-gradient(circle at 59% 9%, #fecdd3 0 5px, transparent 6px),
-    radial-gradient(circle at 38% 14%, #ffedd5 0 10px, transparent 11px),
-    radial-gradient(circle at 16% 8%, #fce7f3 0 6px, transparent 7px);
-}
-
-/* =========================
-   Shared section card
-========================= */
+/* ==========================================================================
+   Section Cards (Luxury Glassmorphism & Gold Edges)
+   ========================================================================== */
 
 .section-card {
   position: relative;
   z-index: 1;
-  border: 1px solid #f8d9df;
-  background:
-    radial-gradient(circle at top left, rgba(255, 241, 242, 0.85), transparent 28%),
-    radial-gradient(circle at bottom right, rgba(255, 247, 237, 0.75), transparent 28%),
-    rgba(255, 255, 255, 0.86);
-  box-shadow:
-    0 8px 24px rgba(220, 169, 177, 0.13),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(8px);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 250, 248, 0.88) 100%);
+  border: 1px solid rgba(244, 63, 94, 0.12);
+  border-radius: 28px;
+  box-shadow: 
+    0 16px 36px -12px rgba(190, 24, 93, 0.08),
+    0 4px 12px -2px rgba(0, 0, 0, 0.02),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(16px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section-card:hover {
+  border-color: rgba(225, 29, 72, 0.22);
+  box-shadow: 
+    0 20px 45px -12px rgba(190, 24, 93, 0.12),
+    0 6px 18px -4px rgba(0, 0, 0, 0.03),
+    inset 0 1px 1px rgba(255, 255, 255, 1);
 }
 
 .section-title {
-  font-family: 'Times New Roman', serif;
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
   font-style: italic;
-  color: #ef5f8a;
-  letter-spacing: 0.02em;
-}
-
-/* =========================
-   Decorated section dots
-========================= */
-
-.decorated-section-card {
+  letter-spacing: 0.01em;
+  color: #be123c;
   position: relative;
-  overflow: hidden;
+  display: inline-block;
 }
 
-.decorated-section-card::before,
-.decorated-section-card::after {
+.section-title::after {
   content: '';
-  position: absolute;
-  z-index: 0;
-  width: 260px;
-  height: 260px;
-  pointer-events: none;
-  opacity: 0.75;
-  filter: blur(0.2px);
+  display: block;
+  width: 48px;
+  height: 2px;
+  margin: 8px auto 0;
+  background: linear-gradient(90deg, transparent, #e11d48, transparent);
+  border-radius: 999px;
 }
 
-.decorated-section-card::before {
-  top: -55px;
-  left: -65px;
-  background:
-    radial-gradient(circle at 16% 18%, #fecdd3 0 9px, transparent 10px),
-    radial-gradient(circle at 35% 10%, #fed7aa 0 7px, transparent 8px),
-    radial-gradient(circle at 52% 22%, #bbf7d0 0 8px, transparent 9px),
-    radial-gradient(circle at 74% 15%, #fbcfe8 0 6px, transparent 7px),
-    radial-gradient(circle at 22% 48%, #ffe4e6 0 12px, transparent 13px),
-    radial-gradient(circle at 50% 55%, #fde68a 0 8px, transparent 9px),
-    radial-gradient(circle at 78% 50%, #fda4af 0 6px, transparent 7px),
-    radial-gradient(circle at 28% 78%, #fff1f2 0 12px, transparent 13px),
-    radial-gradient(circle at 56% 82%, #ffedd5 0 10px, transparent 11px),
-    radial-gradient(circle at 84% 76%, #dcfce7 0 8px, transparent 9px);
-}
+/* ==========================================================================
+   Wax Seal & Envelope Styles (Guest Gate)
+   ========================================================================== */
 
-.decorated-section-card::after {
-  right: -70px;
-  bottom: -65px;
-  background:
-    radial-gradient(circle at 84% 78%, #fecdd3 0 8px, transparent 9px),
-    radial-gradient(circle at 65% 88%, #fbcfe8 0 6px, transparent 7px),
-    radial-gradient(circle at 48% 78%, #fed7aa 0 9px, transparent 10px),
-    radial-gradient(circle at 28% 86%, #fde68a 0 6px, transparent 7px),
-    radial-gradient(circle at 78% 48%, #ffe4e6 0 12px, transparent 13px),
-    radial-gradient(circle at 56% 56%, #fda4af 0 6px, transparent 7px),
-    radial-gradient(circle at 30% 48%, #bbf7d0 0 8px, transparent 9px),
-    radial-gradient(circle at 76% 20%, #fff1f2 0 13px, transparent 14px),
-    radial-gradient(circle at 50% 18%, #ffedd5 0 10px, transparent 11px),
-    radial-gradient(circle at 18% 24%, #fce7f3 0 7px, transparent 8px);
-}
-
-.decorated-section-content {
-  position: relative;
-  z-index: 1;
-}
-
-.section-top-icon {
-  margin-inline: auto;
-  margin-bottom: 12px;
+.wax-seal {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f43f5e 0%, #be123c 55%, #881337 100%);
+  box-shadow: 
+    0 8px 24px rgba(159, 18, 57, 0.35),
+    inset 0 2px 4px rgba(255, 255, 255, 0.3),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.4);
   display: flex;
-  height: 46px;
-  width: 46px;
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.9);
-  color: #ff4f7b;
-  box-shadow:
-    0 10px 24px rgba(220, 169, 177, 0.22),
+  color: #fff1f2;
+  position: relative;
+  border: 2px dashed rgba(255, 255, 255, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wax-seal:hover {
+  transform: scale(1.05);
+  box-shadow: 
+    0 12px 30px rgba(159, 18, 57, 0.45),
+    inset 0 2px 4px rgba(255, 255, 255, 0.4),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.4);
+}
+
+.envelope-card {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid rgba(225, 29, 72, 0.15);
+  border-radius: 32px;
+  box-shadow: 
+    0 25px 60px -15px rgba(190, 24, 93, 0.15),
+    0 0 0 1px rgba(212, 175, 55, 0.2);
+}
+
+.envelope-inner-border {
+  border: 1px dashed rgba(225, 29, 72, 0.25);
+  border-radius: 24px;
+}
+
+/* ==========================================================================
+   Wishes Board Styles
+   ========================================================================== */
+
+.wish-public-board {
+  position: relative;
+  background: linear-gradient(160deg, #ffffff 0%, #fff7f8 50%, #fffbf8 100%);
+  border: 1px solid rgba(244, 63, 94, 0.15);
+  border-radius: 28px;
+  box-shadow: 
+    0 16px 40px -12px rgba(190, 24, 93, 0.09),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
-/* =========================
-   Compact wish board
-========================= */
-
-.wish-compact-board {
-  background:
-    radial-gradient(circle at 8% 10%, rgba(251, 207, 232, 0.5), transparent 13%),
-    radial-gradient(circle at 88% 16%, rgba(254, 215, 170, 0.45), transparent 14%),
-    radial-gradient(circle at 12% 88%, rgba(255, 228, 230, 0.65), transparent 14%),
-    radial-gradient(circle at 90% 86%, rgba(220, 252, 231, 0.38), transparent 13%),
-    linear-gradient(180deg, #fff9fa 0%, #fff5f7 100%);
+.wish-public-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #fff1f2;
+  color: #e11d48;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
-.wish-board-dot {
-  position: absolute;
-  z-index: 0;
-  pointer-events: none;
-  width: 230px;
-  height: 230px;
-  opacity: 0.75;
+.wish-compose-trigger {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 14px;
+  background: #ffffff;
+  border: 1px solid rgba(225, 29, 72, 0.18);
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(225, 29, 72, 0.05);
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.wish-board-dot-top {
-  top: -45px;
-  left: -55px;
-  background:
-    radial-gradient(circle at 18% 20%, #fecdd3 0 7px, transparent 8px),
-    radial-gradient(circle at 35% 12%, #fbcfe8 0 5px, transparent 6px),
-    radial-gradient(circle at 55% 24%, #fed7aa 0 8px, transparent 9px),
-    radial-gradient(circle at 76% 15%, #fde68a 0 5px, transparent 6px),
-    radial-gradient(circle at 28% 48%, #ffe4e6 0 11px, transparent 12px),
-    radial-gradient(circle at 50% 58%, #fda4af 0 5px, transparent 6px),
-    radial-gradient(circle at 72% 50%, #bbf7d0 0 8px, transparent 9px),
-    radial-gradient(circle at 24% 78%, #fff1f2 0 12px, transparent 13px),
-    radial-gradient(circle at 54% 82%, #ffedd5 0 9px, transparent 10px),
-    radial-gradient(circle at 82% 76%, #fce7f3 0 7px, transparent 8px);
+.wish-compose-trigger:hover {
+  border-color: #e11d48;
+  box-shadow: 0 6px 16px rgba(225, 29, 72, 0.12);
+  transform: translateY(-1px);
 }
 
-.wish-board-dot-bottom {
-  right: -60px;
-  bottom: -55px;
-  background:
-    radial-gradient(circle at 82% 78%, #fecdd3 0 8px, transparent 9px),
-    radial-gradient(circle at 66% 88%, #fbcfe8 0 5px, transparent 6px),
-    radial-gradient(circle at 48% 78%, #fed7aa 0 8px, transparent 9px),
-    radial-gradient(circle at 28% 86%, #fde68a 0 5px, transparent 6px),
-    radial-gradient(circle at 78% 48%, #ffe4e6 0 12px, transparent 13px),
-    radial-gradient(circle at 56% 56%, #fda4af 0 5px, transparent 6px),
-    radial-gradient(circle at 30% 48%, #bbf7d0 0 8px, transparent 9px),
-    radial-gradient(circle at 76% 20%, #fff1f2 0 13px, transparent 14px),
-    radial-gradient(circle at 50% 18%, #ffedd5 0 10px, transparent 11px),
-    radial-gradient(circle at 18% 24%, #fce7f3 0 7px, transparent 8px);
+.wish-public-avatar {
+  display: flex;
+  height: 36px;
+  width: 36px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #fecdd3 0%, #fda4af 100%);
+  color: #881337;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.6);
 }
 
-/* =========================
-   Wish two-row auto marquee
-========================= */
+.wish-public-compose {
+  background: #ffffff;
+  border: 1px solid rgba(225, 29, 72, 0.2);
+  border-radius: 20px;
+  padding: 14px;
+  box-shadow: 0 8px 20px rgba(190, 24, 93, 0.08);
+}
 
-.wish-marquee-two-row {
+.wish-compose-close {
+  color: #9ca3af;
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.wish-compose-close:hover {
+  color: #e11d48;
+}
+
+.wish-public-input {
+  border-radius: 14px !important;
+  border-color: #fecdd3 !important;
+  background-color: #fffafb !important;
+}
+
+.wish-public-send {
+  background: linear-gradient(135deg, #e11d48, #f43f5e) !important;
+  border: 0 !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3) !important;
+}
+
+.wish-public-book {
   position: relative;
-  mask-image: linear-gradient(90deg,
-      transparent,
-      black 5%,
-      black 95%,
-      transparent);
 }
 
-.wish-marquee-track-two-row {
-  display: grid;
-  width: max-content;
-  grid-auto-flow: column;
-  grid-template-rows: repeat(2, 92px);
-  grid-auto-columns: 240px;
+.wish-public-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #e11d48;
+  background: #fff1f2;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.wish-public-badge span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e11d48;
+}
+
+.wish-public-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed rgba(225, 29, 72, 0.15);
+  border-radius: 20px;
+  background: #fffafa;
+}
+
+.wish-horizontal-viewport {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  cursor: grab;
+  user-select: none;
+  scrollbar-width: thin;
+}
+
+.wish-horizontal-viewport:active {
+  cursor: grabbing;
+}
+
+.wish-horizontal-track {
+  display: flex;
   gap: 12px;
-  animation: wish-marquee-loop 42s linear infinite;
-  will-change: transform;
-}
-
-.wish-static-two-row {
-  display: grid;
   width: max-content;
-  grid-auto-flow: column;
-  grid-template-rows: repeat(2, 92px);
-  grid-auto-columns: 240px;
-  gap: 12px;
 }
 
-.wish-marquee-two-row:hover .wish-marquee-track-two-row {
-  animation-play-state: paused;
+.wish-horizontal-page {
+  display: grid;
+  gap: 12px;
 }
 
 .wish-float-card {
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
+  background: #ffffff;
+  border: 1px solid rgba(244, 63, 94, 0.12);
+  border-radius: 18px;
+  padding: 12px 14px;
+  box-shadow: 0 4px 14px -3px rgba(190, 24, 93, 0.06);
+  transition: all 0.2s ease;
 }
 
 .wish-float-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(220, 169, 177, 0.18);
+  border-color: rgba(225, 29, 72, 0.25);
+  box-shadow: 0 8px 20px -4px rgba(190, 24, 93, 0.12);
 }
 
-@keyframes wish-marquee-loop {
-  from {
-    transform: translateX(0);
-  }
+/* ==========================================================================
+   Mini Game Styles
+   ========================================================================== */
 
-  to {
-    transform: translateX(-50%);
-  }
+.mini-game-option {
+  position: relative;
+  border: 1px solid rgba(225, 29, 72, 0.15) !important;
+  background: #ffffff !important;
+  color: #4a3b3b !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 4px 12px rgba(190, 24, 93, 0.04) !important;
 }
 
-@media (max-width: 767px) {
-
-  .decorated-section-card::before,
-  .decorated-section-card::after {
-    width: 190px;
-    height: 190px;
-    opacity: 0.32;
-  }
-
-  .decorated-section-card::before {
-    top: -105px;
-    left: -115px;
-  }
-
-  .decorated-section-card::after {
-    right: -115px;
-    bottom: -105px;
-  }
-
-  .wish-board-dot {
-    width: 180px;
-    height: 180px;
-    opacity: 0.32;
-  }
-
-  .wish-board-dot-top {
-    top: -95px;
-    left: -110px;
-  }
-
-  .wish-board-dot-bottom {
-    right: -110px;
-    bottom: -95px;
-  }
-
-  .section-top-icon {
-    height: 42px;
-    width: 42px;
-    margin-bottom: 10px;
-  }
+.mini-game-option:hover:not(:disabled) {
+  border-color: #e11d48 !important;
+  background: #fff1f2 !important;
+  color: #be123c !important;
+  transform: translateY(-1px);
 }
 
-/* =========================
-   Side fireworks + mobile sparkles
-========================= */
+.mini-game-option.is-correct {
+  border-color: #059669 !important;
+  background: #ecfdf5 !important;
+  color: #065f46 !important;
+  font-weight: 600 !important;
+}
+
+.mini-game-option.is-wrong {
+  border-color: #e11d48 !important;
+  background: #fff1f2 !important;
+  color: #9f1239 !important;
+}
+
+/* ==========================================================================
+   Side Fireworks & Sparkles
+   ========================================================================== */
 
 .side-fireworks-layer {
   pointer-events: none;
@@ -552,11 +534,9 @@ body {
     opacity: 0;
     transform: translate(-260px, -50%) scaleX(0.15);
   }
-
   25% {
     opacity: 1;
   }
-
   100% {
     opacity: 0;
     transform: translate(0, -50%) scaleX(1);
@@ -568,11 +548,9 @@ body {
     opacity: 0;
     transform: translate(260px, -50%) scaleX(0.15);
   }
-
   25% {
     opacity: 1;
   }
-
   100% {
     opacity: 0;
     transform: translate(0, -50%) scaleX(1);
@@ -584,12 +562,10 @@ body {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.2);
   }
-
   40% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
-
   100% {
     opacity: 0;
     transform: translate(-50%, -50%) scale(2.4);
@@ -601,18 +577,12 @@ body {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.3);
   }
-
   18% {
     opacity: 1;
   }
-
   100% {
     opacity: 0;
-    transform: translate(
-        calc(-50% + var(--x)),
-        calc(-50% + var(--y))
-      )
-      scale(0);
+    transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(0);
   }
 }
 
@@ -621,15 +591,12 @@ body {
     opacity: 0;
     transform: translate3d(0, 14px, 0) scale(0.35);
   }
-
   25% {
     opacity: 0.75;
   }
-
   70% {
     opacity: 0.55;
   }
-
   100% {
     opacity: 0;
     transform: translate3d(var(--move-x), -38px, 0) scale(1.15);
@@ -648,10 +615,65 @@ body {
     overflow: hidden;
     opacity: 0.9;
   }
-} 
+}
 
 @media (prefers-reduced-motion: reduce) {
   .side-fireworks-layer {
     display: none;
   }
 }
+
+/* ==========================================================================
+   Audio Floating Button Wave
+   ========================================================================== */
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+}
+
+.music-ring-pulse {
+  animation: pulse-ring 2.2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+}
+
+/* Scrollbar polish */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(254, 226, 226, 0.2);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(225, 29, 72, 0.25);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(225, 29, 72, 0.45);
+}
+
+/* Timeline Custom Clean Styles */
+.wedding-timeline-compact .ant-timeline-item-head {
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+
+.wedding-timeline-compact .ant-timeline-item-tail {
+  border-left-color: rgba(244, 63, 94, 0.3) !important;
+}
+

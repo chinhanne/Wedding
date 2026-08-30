@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   addDoc,
   collection,
+  getCountFromServer,
   getDocs,
   limit,
   onSnapshot,
@@ -16,6 +17,10 @@ import {
   type FirestoreError,
   type QueryDocumentSnapshot,
 } from 'firebase/firestore';
+import {
+  MAX_GUEST_NAME_LENGTH,
+  MAX_WISH_LENGTH,
+} from '../constants/validation';
 import { db } from '../lib/firebaseClient';
 import type {
   CreateWeddingWishDocument,
@@ -23,8 +28,9 @@ import type {
   WeddingWishDocument,
 } from '../types/index';
 
-type UseWeddingWishesResult = {
+export type UseWeddingWishesResult = {
   wishes: WeddingWish[];
+  totalWishCount: number | null;
   isInitialLoading: boolean;
   isLoadingMore: boolean;
   isSubmitting: boolean;
@@ -36,7 +42,6 @@ type UseWeddingWishesResult = {
 
 const WISHES_COLLECTION = 'wedding_wishes';
 const WISH_PAGE_SIZE = 10;
-const MAX_WISH_LENGTH = 300;
 
 function isWeddingWishDocument(
   data: Record<string, unknown>
@@ -77,9 +82,12 @@ function mergeAndSortWishes(wishes: WeddingWish[]): WeddingWish[] {
   );
 }
 
-export function useWeddingWishes(): UseWeddingWishesResult {
+export function useWeddingWishes(
+  enabled = true
+): UseWeddingWishesResult {
   const [realtimeWishes, setRealtimeWishes] = useState<WeddingWish[]>([]);
   const [olderWishes, setOlderWishes] = useState<WeddingWish[]>([]);
+  const [totalWishCount, setTotalWishCount] = useState<number | null>(null);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -90,13 +98,27 @@ export function useWeddingWishes(): UseWeddingWishesResult {
     useRef<QueryDocumentSnapshot<DocumentData> | null>(null);
 
   const hasInitializedCursorRef = useRef(false);
+  const isLoadingMoreRef = useRef(false);
 
   const wishes = useMemo(() => {
     return mergeAndSortWishes([...realtimeWishes, ...olderWishes]);
   }, [realtimeWishes, olderWishes]);
 
   useEffect(() => {
+    if (!enabled) return;
+
     const wishesRef = collection(db, WISHES_COLLECTION);
+    let isActive = true;
+
+    void getCountFromServer(wishesRef)
+      .then((snapshot) => {
+        if (isActive) {
+          setTotalWishCount(snapshot.data().count);
+        }
+      })
+      .catch((error: FirestoreError) => {
+        console.error('[Count wishes error]', error);
+      });
 
     const newestWishesQuery = query(
       wishesRef,
@@ -132,13 +154,17 @@ export function useWeddingWishes(): UseWeddingWishesResult {
     );
 
     return () => {
+      isActive = false;
       unsubscribe();
     };
-  }, []);
+  }, [enabled]);
 
   const loadMoreWishes = useCallback(async () => {
-    if (isLoadingMore || !hasMore || !paginationCursorRef.current) return;
+    if (isLoadingMoreRef.current || !hasMore || !paginationCursorRef.current) {
+      return;
+    }
 
+    isLoadingMoreRef.current = true;
     setIsLoadingMore(true);
     setErrorMessage('');
 
@@ -175,9 +201,10 @@ export function useWeddingWishes(): UseWeddingWishesResult {
       console.error('[Load more wishes error]', firestoreError);
       setErrorMessage('Không thể tải thêm lời chúc. Bạn thử lại sau nha.');
     } finally {
+      isLoadingMoreRef.current = false;
       setIsLoadingMore(false);
     }
-  }, [hasMore, isLoadingMore]);
+  }, [hasMore]);
 
   const submitWish = async (
     guestName: string,
@@ -188,6 +215,11 @@ export function useWeddingWishes(): UseWeddingWishesResult {
 
     if (!trimmedName) {
       setErrorMessage('Không tìm thấy tên khách mời.');
+      return false;
+    }
+
+    if (trimmedName.length > MAX_GUEST_NAME_LENGTH) {
+      setErrorMessage(`Tên khách mời tối đa ${MAX_GUEST_NAME_LENGTH} ký tự.`);
       return false;
     }
 
@@ -212,6 +244,9 @@ export function useWeddingWishes(): UseWeddingWishesResult {
 
     try {
       await addDoc(collection(db, WISHES_COLLECTION), wishData);
+      setTotalWishCount((currentCount) =>
+        currentCount === null ? null : currentCount + 1
+      );
       return true;
     } catch (error) {
       const firestoreError = error as FirestoreError;
@@ -224,13 +259,17 @@ export function useWeddingWishes(): UseWeddingWishesResult {
     }
   };
 
+  const canLoadMore =
+    hasMore && (totalWishCount === null || wishes.length < totalWishCount);
+
   return {
     wishes,
+    totalWishCount,
     isInitialLoading,
     isLoadingMore,
     isSubmitting,
     errorMessage,
-    hasMore,
+    hasMore: canLoadMore,
     submitWish,
     loadMoreWishes,
   };
