@@ -84,7 +84,7 @@ export function GuestGate({ onOpen }: GuestGateProps) {
 
             <div className="my-3 flex items-center justify-center gap-2">
               <span className="h-[1px] w-8 bg-gradient-to-r from-transparent to-rose-300" />
-              <span className="text-xs uppercase tracking-widest text-stone-400 font-semibold">Minh Đức & Ngọc Châu</span>
+              <span className="text-xs uppercase tracking-widest text-stone-400 font-semibold">Ngọc Châu & Minh Đức</span>
               <span className="h-[1px] w-8 bg-gradient-to-l from-transparent to-rose-300" />
             </div>
 

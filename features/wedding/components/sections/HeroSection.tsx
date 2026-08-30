@@ -12,7 +12,7 @@ type HeroSectionProps = {
   onToggleMusic: () => void;
 };
 
-export function HeroSection({}: HeroSectionProps) {
+export function HeroSection({ }: HeroSectionProps) {
   return (
     <section className="relative overflow-hidden rounded-b-[32px] md:rounded-t-[36px]">
       {/* Background Photo Slider */}
@@ -26,7 +26,7 @@ export function HeroSection({}: HeroSectionProps) {
 
       {/* Hero Content - Placed at Top and Bottom */}
       <div className="absolute inset-0 flex flex-col justify-between p-4 sm:p-6 md:p-8">
-        
+
         {/* Top Header: Couple Names */}
         <div className="text-center pt-2 sm:pt-4">
           <div className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-amber-300/70 bg-black/30 px-4 py-0.5 sm:py-1 backdrop-blur-xs shadow-md">
@@ -39,20 +39,20 @@ export function HeroSection({}: HeroSectionProps) {
 
           <h1 className="mt-2 text-center drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
             <span className="block font-cormorant text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-wide text-white">
-              {weddingInfo.groomName}
+              {weddingInfo.brideName}
             </span>
             <span className="my-0.5 block font-script text-3xl sm:text-4xl md:text-5xl text-rose-200 drop-shadow-md">
               &
             </span>
             <span className="block font-cormorant text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-wide text-white">
-              {weddingInfo.brideName}
+              {weddingInfo.groomName}
             </span>
           </h1>
         </div>
 
         {/* Bottom Section: Date, Countdown, Quick Navigation Buttons */}
         <div className="w-full max-w-sm sm:max-w-md mx-auto text-center pb-6 sm:pb-7">
-          
+
           {/* Wedding Date Badge */}
           <div className="inline-flex items-center gap-2 rounded-full border border-amber-300/80 bg-black/50 px-5 py-1.5 backdrop-blur-xs shadow-lg">
             <WeddingIcons.calendar style={{ color: '#fde047', fontSize: 16 }} />

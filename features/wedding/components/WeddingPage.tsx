@@ -201,7 +201,7 @@ export function WeddingPage() {
             </p>
 
             <p className="mt-1 text-sm text-stone-500 font-medium">
-              Minh Đức & Ngọc Châu · 19.09.2026
+              Ngọc Châu & Minh Đức · 19.09.2026
             </p>
           </div>
         </footer>

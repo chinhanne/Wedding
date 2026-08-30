@@ -35,7 +35,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: 'Thiệp Cưới Minh Đức & Ngọc Châu | Trân Trọng Kính Mời',
+  title: 'Thiệp Cưới Ngọc Châu & Minh Đức | Trân Trọng Kính Mời',
   description: 'Trân trọng kính mời bạn đến chung vui cùng gia đình chúng tôi trong ngày trọng đại!',
 };
 
